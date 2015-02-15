@@ -1,37 +1,30 @@
-require './cell.rb'
-
-EG1 = {
-  1 => [0, 2, 0,    9, 7, 3,    0, 5, 0],
-  2 => [0, 0, 0,    2, 1, 8,    0, 0, 0],
-  3 => [0, 0, 3,    6, 4, 0,    0, 0, 0],
-
-  4 => [0, 0, 2,    8, 3, 9,    4, 0, 0],
-  5 => [0, 4, 6,    5, 2, 7,    8, 0, 1],
-  6 => [0, 5, 0,    0, 6, 4,    2, 0, 7],
-
-  7 => [0, 0, 0,    0, 0, 0,    0, 0, 0],
-  8 => [7, 9, 1,    4, 0, 0,    0, 0, 0],
-  9 => [0, 0, 5,    0, 8, 6,    0, 0, 0],
-}
+require_relative 'cell'
+require_relative 'cell_group'
+require_relative 'examples'
 
 
 class Sudoku
-  def initialize
+  def initialize state = []
     @cells = []
-    EG1.each do | row_num, row |
+    set_initial_state(state)
+    solve!
+  end
+
+  def set_initial_state state
+    state.each_with_index do | row, row_num |
       row.each_with_index do | val, col_num |
-        puts "row_num: #{row_num}, col_num: #{col_num}, val: #{val}"
-        @cells << Cell.new(col_num + 1, row_num, val, self)
+        @cells << Cell.new(col_num + 1, row_num + 1, val, self)
       end
     end
   end
 
   def solve!
-    return if solved?
-    @cells.each do |c|
-      c.solve!
+    50.times do
+      return if solved?
+      @cells.each do |c|
+        c.solve!
+      end
     end
-
   end
 
   def solved?
@@ -52,36 +45,36 @@ class Sudoku
     return # just to stop pry printing the @cells array
   end
 
-  def row_vals row_num
+  def row row_num
     vals = []
     @cells.each do |c|
       if c.x == row_num
-        vals << c.val
+        vals << c
       end
     end
-    return vals
+    return CellGroup.new(vals)
   end
 
-  def col_vals col_num
+  def col col_num
     vals = []
     @cells.each do |c|
       if c.y == col_num
-        vals << c.val
+        vals << c
       end
     end
-    return vals
+    return CellGroup.new(vals)
   end
 
-  def square_vals square_x, square_y
+  def square square_x, square_y
     vals = []
     @cells.each do |c|
       x_candidates = thirds square_x
       y_candidates = thirds square_y
       if x_candidates.include?(c.x) && y_candidates.include?(c.y)
-        vals << c.val
+        vals << c
       end
     end
-    return vals
+    return CellGroup.new(vals)
   end
 
   def thirds num
@@ -96,6 +89,9 @@ class Sudoku
     return range
   end
 
+  def cell_at x, y
+    @cells.detect{|c| c.x == x && c.y == y}
+  end
 end
 
 
