@@ -28,10 +28,12 @@ class Cell
     check_if_solved
   end
 
+  # This is the means to solve easy puzzles
   def eliminate_candidates_by_values(cell_group)
     @candidates = @candidates - cell_group.vals
   end
 
+  # This is used to solve medium puzzles
   def check_for_exclusive_candidate(cell_group)
     remaining_candidates = @candidates - cell_group.candidates_outside_of(self)
     if remaining_candidates.count == 1
@@ -59,15 +61,15 @@ class Cell
   end
 
   def row
-    @board.row(@x)
+    @row ||= @board.row(@x)
   end
 
   def col
-    @board.col(@y)
+    @col ||= @board.col(@y)
   end
 
   def square
-    @board.square(square_x, square_y)
+    @square ||= @board.square(square_x, square_y)
   end
 
   def square_x
