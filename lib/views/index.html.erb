@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hello World</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/application.css">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <h1>Hello <%= greet_name %></h1>
+  <form method="post" action="/change">
+    <input name="name" type="text">
+    <input type="submit" value="Change Name">
+  </form>
+
+  <table class="table table-bordered">
+  <% (1..9).each do |i| %>
+    <tr>
+      <% @sudoku.row(i).cells.each do |c| %>
+        <td><%= c.val %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+</body>
+</html>

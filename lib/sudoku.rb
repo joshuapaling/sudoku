@@ -7,7 +7,6 @@ class Sudoku
   def initialize state = []
     @cells = []
     set_initial_state(state)
-    solve!
   end
 
   def set_initial_state state
