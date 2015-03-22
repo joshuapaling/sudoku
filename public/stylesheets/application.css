@@ -1,3 +1,43 @@
+
+table {
+  width: 1000px !important;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid black !important;
+}
+
 td {
-	text-align: center;
+  border: 1px solid black !important;
+}
+
+.table-bordered > tbody > tr > td {
+  text-align: center;
+  vertical-align: middle !important;
+  width: 100px;
+  height: 100px;
+}
+
+.table-bordered > tbody > tr:nth-child(3n) > td {
+  border-bottom: 2px solid black !important;
+}
+
+.table-bordered > tbody > tr > td:nth-child(3n) {
+  border-right: 2px solid black !important;
+}
+
+.solved_square {
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.candidate {
+  display: inline-block;
+  width: 31px;
+  line-height: 31px;
+  float: left;
+  color: #666;
+}
+
+.candidate.eliminated {
+  color: #f2f2f2;
 }
