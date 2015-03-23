@@ -11,6 +11,7 @@ class Cell
     end
     @val = val
     @candidates = @val ? [] : (1..9).to_a
+    @has_twin = false
   end
 
   def each_cell_group
@@ -24,6 +25,7 @@ class Cell
     each_cell_group do |cell_group|
       eliminate_candidates_by_values(cell_group)
       check_for_exclusive_candidate(cell_group)
+      cell_group.eliminate_twin_candidates(self)
     end
     check_if_solved
   end
@@ -68,6 +70,7 @@ class Cell
     @col ||= @board.col(@y)
   end
 
+private
   def square
     @square ||= @board.square(square_x, square_y)
   end
