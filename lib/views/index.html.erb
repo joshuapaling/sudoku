@@ -19,7 +19,7 @@
   <table class="table table-bordered">
   <% (1..9).each do |i| %>
     <tr>
-      <% @sudoku.row(i).cells.each do |c| %>
+      <% @sudoku.col(i).cells.each do |c| %>
         <td>
           <% if c.val %>
             <span class="solved_square"><%= c.val %></span>

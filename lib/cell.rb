@@ -26,6 +26,7 @@ class Cell
       eliminate_candidates_by_values(cell_group)
       check_for_exclusive_candidate(cell_group)
       cell_group.eliminate_twin_candidates(self)
+      cell_group.eliminate_restricted_candidates_from_overlapping_cell_groups(self)
     end
     check_if_solved
   end
@@ -41,6 +42,10 @@ class Cell
     if remaining_candidates.count == 1
       @candidates = remaining_candidates
     end
+  end
+
+  def eliminate_candidate(i)
+    @candidates = @candidates - [i]
   end
 
   def check_if_solved
@@ -59,7 +64,7 @@ class Cell
   end
 
   def to_s
-    return (@val) ? @val : '-'
+    return (@val.to_s) ? @val : '-'
   end
 
   def row
@@ -70,7 +75,6 @@ class Cell
     @col ||= @board.col(@y)
   end
 
-private
   def square
     @square ||= @board.square(square_x, square_y)
   end

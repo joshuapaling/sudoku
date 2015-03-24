@@ -18,7 +18,7 @@ class Sudoku
   end
 
   def solve!
-    150.times do # need to implement a better way to decide when to stop. Probably just when nothing changes from the previous round.
+    50.times do # need to implement a better way to decide when to stop. Probably just when nothing changes from the previous round.
       return if solved?
       @cells.each do |c|
         c.solve!
@@ -31,7 +31,7 @@ class Sudoku
     @cells.each do |c|
       solved = false if !c.solved?
     end
-    return solved
+    return solved # ToDo - need to check the solution to make sure there's no errors.
   end
 
   def pretty_print
