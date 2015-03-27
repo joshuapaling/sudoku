@@ -9,7 +9,7 @@ class Web
 
   def initialize(env)
     @request = Rack::Request.new(env)
-    @sudoku = Sudoku.new(EVIL2)
+    @sudoku = Sudoku::Game.new(EVIL3)
     @sudoku.solve!
   end
 
