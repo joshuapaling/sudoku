@@ -25,7 +25,7 @@ td {
   border-right: 2px solid black !important;
 }
 
-.solved_square {
+.solved_box {
   font-weight: bold;
   font-size: 28px;
 }

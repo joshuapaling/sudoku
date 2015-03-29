@@ -22,7 +22,7 @@
       <% @sudoku.col(i).cells.each do |c| %>
         <td>
           <% if c.val %>
-            <span class="solved_square"><%= c.val %></span>
+            <span class="solved_box"><%= c.val %></span>
           <% else %>
             <% (1..9).each do |i| %>
               <% if c.candidates.include? i %>

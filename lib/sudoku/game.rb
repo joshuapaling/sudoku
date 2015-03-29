@@ -14,13 +14,45 @@ module Sudoku
       end
     end
 
+    def techniques
+      [
+        Sudoku::Techniques::Elimination,
+        Sudoku::Techniques::HiddenSingle,
+        Sudoku::Techniques::NakedPair,
+        Sudoku::Techniques::LockedCandidate,
+      ]
+    end
+
     def solve!
-      50.times do # need to implement a better way to decide when to stop. Probably just when nothing changes from the previous round.
-        return if solved?
-        @cells.each do |c|
-          c.solve!
+      until stuck? || solved? do
+        @prev_candidate_count = candidate_count
+        apply_all_techniques
+      end
+    end
+
+    def apply_all_techniques
+      unsolved_cells.each do |cell|
+        techniques.each do |technique|
+          technique.call(cell)
+          solve_lone_candidates
         end
       end
+    end
+
+    def solve_lone_candidates
+      @cells.each { |c| c.solve_if_lone_candidate! }
+    end
+
+    def candidate_count
+      count = 0
+      @cells.each do |c|
+        count += c.candidate_count
+      end
+      return count
+    end
+
+    def stuck?
+      @prev_candidate_count == candidate_count
     end
 
     def solved?
@@ -29,6 +61,10 @@ module Sudoku
         solved = false if !c.solved?
       end
       return solved # ToDo - need to check the solution to make sure there's no errors.
+    end
+
+    def unsolved_cells
+      @cells.select { |c| !c.solved? }
     end
 
     def pretty_print
@@ -41,39 +77,39 @@ module Sudoku
       return # just to stop pry printing the @cells array
     end
 
-    def row row_num
+    def row(row_num)
       vals = []
       @cells.each do |c|
         if c.x == row_num
           vals << c
         end
       end
-      return CellGroup.new(vals)
+      return Scope.new(vals)
     end
 
-    def col col_num
+    def col(col_num)
       vals = []
       @cells.each do |c|
         if c.y == col_num
           vals << c
         end
       end
-      return CellGroup.new(vals)
+      return Scope.new(vals)
     end
 
-    def square square_x, square_y
+    def box(box_x, box_y)
       vals = []
       @cells.each do |c|
-        x_candidates = thirds square_x
-        y_candidates = thirds square_y
+        x_candidates = thirds box_x
+        y_candidates = thirds box_y
         if x_candidates.include?(c.x) && y_candidates.include?(c.y)
           vals << c
         end
       end
-      return CellGroup.new(vals)
+      return Scope.new(vals)
     end
 
-    def thirds num
+    def thirds(num)
       case num
       when 1
         range = 1..3
@@ -85,7 +121,7 @@ module Sudoku
       return range
     end
 
-    def cell_at x, y
+    def cell_at(x, y)
       @cells.detect{|c| c.x == x && c.y == y}
     end
   end

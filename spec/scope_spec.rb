@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sudoku::CellGroup do
+describe Sudoku::Scope do
   before :each do
     s = Sudoku::Game.new
     @c1 = Sudoku::Cell.new(1,1,0,s)
@@ -11,13 +11,20 @@ describe Sudoku::CellGroup do
     @c3.candidates = [1,2,4]
     cells = [@c1, @c2, @c3]
 
-    @cell_group = Sudoku::CellGroup.new cells
+    @scope = Sudoku::Scope.new cells
   end
 
   describe "#candidates_outside_of" do
     it "finds a candidate that is the only instance of that candidate" do
-      candidates = @cell_group.candidates_outside_of @c1
+      candidates = @scope.candidates_outside_of @c1
       expect(candidates).to eq([1,2,4])
+    end
+  end
+
+  describe "#cells_other_than" do
+    it "returns all cells other than the one specified" do
+      cells = @scope.cells_other_than(@c3)
+      expect(cells).to eq([@c1, @c2])
     end
   end
 
