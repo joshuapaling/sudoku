@@ -1,16 +1,17 @@
 require 'spec_helper'
 
-def check_can_solve puzzle
-  s = Sudoku::Game.new puzzle
+def check_can_solve(puzzle, solution = nil)
+  s = Sudoku::Game.new(puzzle, solution)
   s.solve!
   expect(s.solved?).to be true
+  s.pretty_print
 end
 
 describe Sudoku::Game do
 
   describe "#solve!" do
     it "solves an easy puzzle" do
-      check_can_solve EASY1
+      check_can_solve(EASY1, EASY1_SOLUTION)
     end
 
     it "solves a medium puzzle" do

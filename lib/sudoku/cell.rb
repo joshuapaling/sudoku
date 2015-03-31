@@ -5,13 +5,14 @@ module Sudoku
     attr_reader :x, :y, :candidates
     attr_accessor :val
 
-    def initialize x, y, val, game
+    def initialize(x, y, val, game, solved_val = nil)
       @x = x
       @y = y
       @game = game
       @val = val
       @candidates = @val ? [] : (1..9).to_a
       @has_twin = false
+      @solved_val = solved_val
     end
 
     def each_scope
@@ -22,8 +23,8 @@ module Sudoku
 
     def eliminate_candidates(arr)
       return if solved?
-      if (@candidates - arr).empty?
-        raise 'We should NOT be eliminating all candidates! Must always be one left. Cell: ' + coords_str + ' eliminating ' + arr.to_s + ' from ' + @candidates.to_s
+      if @solved_val && (arr).include?(@solved_val)
+        raise 'We should NOT be eliminating the solution value of ' + @solved_val.to_s + '! Cell: ' + coords_str + ' eliminating ' + arr.to_s + ' from ' + @candidates.to_s
       end
       @candidates = @candidates - arr
       solve_if_lone_candidate!

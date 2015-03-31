@@ -1,15 +1,18 @@
 module Sudoku
   class Game
-    def initialize state = []
+    def initialize(state = [], solution = nil)
       @cells = []
-      set_initial_state(state)
+      set_initial_state(state, solution)
     end
 
-    def set_initial_state state
+    def set_initial_state(state, solution)
       state.each_with_index do | row, row_num |
         row.each_with_index do | val, col_num |
           val = nil if val == 0 # having val as 0 is just cos it's 2 less chars than nil. Stupid shortcut!
-          @cells << Cell.new(col_num + 1, row_num + 1, val, self)
+          if solution
+            solved_val = solution[row_num][col_num]
+          end
+          @cells << Cell.new(col_num + 1, row_num + 1, val, self, solved_val)
         end
       end
     end
@@ -31,8 +34,8 @@ module Sudoku
     end
 
     def apply_all_techniques
-      unsolved_cells.each do |cell|
         techniques.each do |technique|
+      unsolved_cells.each do |cell|
           technique.call(cell)
         end
       end
@@ -95,8 +98,8 @@ module Sudoku
     def box(box_x, box_y)
       vals = []
       @cells.each do |c|
-        x_candidates = thirds box_x
-        y_candidates = thirds box_y
+        x_candidates = thirds(box_x)
+        y_candidates = thirds(box_y)
         if x_candidates.include?(c.x) && y_candidates.include?(c.y)
           vals << c
         end
