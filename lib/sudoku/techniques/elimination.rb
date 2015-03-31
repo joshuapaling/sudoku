@@ -15,7 +15,8 @@ module Sudoku
 
       def call
         @cell.each_scope do |scope|
-          @cell.eliminate_candidates(scope.vals)
+          puts @cell.coords_str + ': Eliminating ' + scope.vals_outside_of(@cell).to_s + ' from ' + @cell.candidates.to_s
+          @cell.eliminate_candidates(scope.vals_outside_of(@cell))
         end
       end
     end

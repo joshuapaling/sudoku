@@ -6,10 +6,10 @@ module Sudoku
       @cells = cells
     end
 
-    def vals
+    def vals_outside_of(cell)
       vals = []
       @cells.each do |c|
-        vals << c.val
+        vals << c.val unless c == cell
       end
       return vals
     end

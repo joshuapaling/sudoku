@@ -1,7 +1,9 @@
 module Sudoku
   class Cell
-    attr_reader :x, :y
-    attr_accessor :candidates, :val
+    # Never allow @candidates to be writable outside this class.
+    # It should only be changed via 'eliminate_candidates' method
+    attr_reader :x, :y, :candidates
+    attr_accessor :val
 
     def initialize x, y, val, game
       @x = x
@@ -19,7 +21,12 @@ module Sudoku
     end
 
     def eliminate_candidates(arr)
+      return if solved?
+      if (@candidates - arr).empty?
+        raise 'We should NOT be eliminating all candidates! Must always be one left. Cell: ' + coords_str + ' eliminating ' + arr.to_s + ' from ' + @candidates.to_s
+      end
       @candidates = @candidates - arr
+      solve_if_lone_candidate!
     end
 
     def eliminate_candidate(i)
@@ -67,6 +74,10 @@ module Sudoku
 
     def candidate_count
       @candidates.count
+    end
+
+    def coords_str
+      [@x, @y].to_s
     end
 
   end

@@ -34,13 +34,8 @@ module Sudoku
       unsolved_cells.each do |cell|
         techniques.each do |technique|
           technique.call(cell)
-          solve_lone_candidates
         end
       end
-    end
-
-    def solve_lone_candidates
-      @cells.each { |c| c.solve_if_lone_candidate! }
     end
 
     def candidate_count

@@ -15,9 +15,11 @@ module Sudoku
 
       def call
         @cell.each_scope do |scope|
-          remaining_candidates = @cell.candidates - scope.candidates_outside_of(@cell)
+          other_candidates = scope.candidates_outside_of(@cell)
+          remaining_candidates = @cell.candidates - other_candidates
           if remaining_candidates.count == 1
-            @cell.candidates = remaining_candidates
+            puts  @cell.coords_str + ': Hidden Single (' + remaining_candidates[0].to_s + '): ' + scope.candidates_outside_of(@cell).to_s + ' from ' + @cell.candidates.to_s
+            @cell.eliminate_candidates(other_candidates)
           end
         end
       end
