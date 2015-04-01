@@ -1,6 +1,16 @@
 module Sudoku
   class PrettyPrinter
 
+    def print_game(g)
+      row_sep = "|%|%%%%%%%|%%%%%%%|%%%%%%%|%|%%%%%%%|%%%%%%%|%%%%%%%|%|%%%%%%%|%%%%%%%|%%%%%%%|%|\n"
+      buffer = row_sep
+      (1..9).each do |i|
+        buffer += print_row(g.row(i))
+        buffer += row_sep if (i % 3 == 0)
+      end
+      return buffer
+    end
+
     def print_row(r)
       cell_strs = r.cells.map do |cell|
         print_cell(cell).split("\n")
@@ -8,9 +18,10 @@ module Sudoku
 
       buffer = ''
       cell_strs[0].count.times do |i|
-        cell_strs.each do |cell_str|
-          # take all the first lines and append them,
+        buffer += '|%|'
+        cell_strs.each_with_index do |cell_str, j|
           buffer += cell_str[i]
+          buffer += '%|' if ((j+1) % 3 == 0)
         end
         buffer += "\n"
       end
@@ -18,19 +29,19 @@ module Sudoku
     end
     # Intended result (note spaces before first numbers,
     # and eliminated candidates are -):
-    # --------
+    # -------|
     #  1 2 3 |
     #  4 5 - |
     #  7 - 9 |
     #
     #  Or, for solves squares:
     #
-    #  --------
+    #  ------|
     #  ` ` ` |
     #  ` 3 ` |
     #  ` ` ` |
     def print_cell(c)
-      result = "--------\n"
+      result = "-------|\n"
       if c.solved?
         rows = <<EOT
  ` ` ` |
