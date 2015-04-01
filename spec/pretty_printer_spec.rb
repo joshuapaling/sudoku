@@ -2,11 +2,24 @@ require 'spec_helper'
 
 describe Sudoku::PrettyPrinter do
   before :each do
-    @game = Sudoku::Game.new
+    @game = Sudoku::Game.new(EMPTY)
     @pp = Sudoku::PrettyPrinter.new
   end
 
-  describe '#cell' do
+  describe '#print_row' do
+    it "connects cells correctly" do
+      expected = <<EOT
+------------------------------------------------------------------------
+ 1 2 3 | 1 2 3 | 1 2 3 | 1 2 3 | 1 2 3 | 1 2 3 | 1 2 3 | 1 2 3 | 1 2 3 |
+ 4 5 6 | 4 5 6 | 4 5 6 | 4 5 6 | 4 5 6 | 4 5 6 | 4 5 6 | 4 5 6 | 4 5 6 |
+ 7 8 9 | 7 8 9 | 7 8 9 | 7 8 9 | 7 8 9 | 7 8 9 | 7 8 9 | 7 8 9 | 7 8 9 |
+EOT
+      row = @game.row(1)
+      expect(@pp.print_row(row)).to eq(expected)
+    end
+  end
+
+  describe '#print_cell' do
     it 'works for cell with all candidates' do
       expected = <<EOT
 --------

@@ -1,3 +1,8 @@
+begin
+  require "pry"
+rescue LoadError
+end
+
 require 'sudoku/game'
 require 'sudoku/cell'
 require 'sudoku/scope'

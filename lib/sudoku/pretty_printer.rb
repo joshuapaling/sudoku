@@ -1,6 +1,21 @@
 module Sudoku
   class PrettyPrinter
 
+    def print_row(r)
+      cell_strs = r.cells.map do |cell|
+        print_cell(cell).split("\n")
+      end
+
+      buffer = ''
+      cell_strs[0].count.times do |i|
+        cell_strs.each do |cell_str|
+          # take all the first lines and append them,
+          buffer += cell_str[i]
+        end
+        buffer += "\n"
+      end
+      return buffer
+    end
     # Intended result (note spaces before first numbers,
     # and eliminated candidates are -):
     # --------
