@@ -65,16 +65,6 @@ module Sudoku
       @cells.select { |c| !c.solved? }
     end
 
-    def pretty_print
-      @cells.each do |c|
-        print " #{c.to_s} "
-        if c.last_in_row
-          puts '' #we just want a new line
-        end
-      end
-      return # just to stop pry printing the @cells array
-    end
-
     def row(row_num)
       vals = []
       @cells.each do |c|
