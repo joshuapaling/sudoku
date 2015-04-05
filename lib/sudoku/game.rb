@@ -34,8 +34,8 @@ module Sudoku
     end
 
     def apply_all_techniques
-        techniques.each do |technique|
       unsolved_cells.each do |cell|
+        techniques.each do |technique|
           technique.call(cell)
         end
       end
@@ -78,7 +78,7 @@ module Sudoku
     def row(row_num)
       vals = []
       @cells.each do |c|
-        if c.x == row_num
+        if c.y == row_num
           vals << c
         end
       end
@@ -88,7 +88,7 @@ module Sudoku
     def col(col_num)
       vals = []
       @cells.each do |c|
-        if c.y == col_num
+        if c.x == col_num
           vals << c
         end
       end

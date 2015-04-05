@@ -11,6 +11,15 @@ module Sudoku
       return buffer
     end
 
+    def color_print_game(g)
+      buffer = print_game(g)
+      buffer.gsub!(/%/, '%'.yellow.on_yellow)
+      buffer.gsub!(/\|/, '|'.yellow.on_yellow)
+      buffer.gsub!(/-------/, '-------'.yellow.on_yellow)
+      buffer.gsub!(/ ` ` ` /, ' ` ` ` '.black.on_green)
+      buffer.gsub!(/ ` (\d) ` /, ' ` \1 ` '.black.on_green)
+    end
+
     def print_row(r)
       cell_strs = r.cells.map do |cell|
         print_cell(cell).split("\n")

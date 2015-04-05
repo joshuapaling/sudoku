@@ -24,6 +24,7 @@ module Sudoku
     def eliminate_candidates(arr)
       return if solved?
       if @solved_val && (arr).include?(@solved_val)
+        puts PrettyPrinter.color_print_game(@game)
         raise 'We should NOT be eliminating the solution value of ' + @solved_val.to_s + '! Cell: ' + coords_str + ' eliminating ' + arr.to_s + ' from ' + @candidates.to_s
       end
       @candidates = @candidates - arr

@@ -10,6 +10,14 @@ end
 describe Sudoku::Game do
 
   describe "#solve!" do
+    it 'imports a game correctly' do
+      @game = Sudoku::Game.new(EASY1)
+      val = @game.cell_at(2,1).val
+      expect(val).to eq(2)
+      val = @game.cell_at(1,8).val
+      expect(val).to eq(7)
+    end
+
     it "solves an easy puzzle" do
       check_can_solve(EASY1, EASY1_SOLUTION)
     end

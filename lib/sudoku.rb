@@ -3,6 +3,7 @@ begin
 rescue LoadError
 end
 
+require 'colorize'
 require 'sudoku/game'
 require 'sudoku/cell'
 require 'sudoku/scope'
