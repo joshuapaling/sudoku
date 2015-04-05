@@ -55,11 +55,11 @@ module Sudoku
     end
 
     def row
-      @row ||= @game.row(@x)
+      @row ||= @game.row(@y)
     end
 
     def col
-      @col ||= @game.col(@y)
+      @col ||= @game.col(@x)
     end
 
     def box

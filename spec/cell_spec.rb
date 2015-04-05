@@ -2,14 +2,22 @@ require 'spec_helper'
 
 describe Sudoku::Cell do
   before :each do
-    s = Sudoku::Game.new
-    @c1 = Sudoku::Cell.new(1,1,0,s)
-    @c1.candidates = [1,2,3]
+    @game = Sudoku::Game.new(EASY1)
   end
 
-  describe "#solved" do
-    it "" do
-      expect(candidates).to eq([1,2,4])
+  describe '#row' do
+    it 'returns the right row' do
+      cell = @game.cell_at(2,1)
+      row = @game.row(1)
+      expect(cell.row.cells).to eq(row.cells)
+    end
+  end
+
+  describe '#col' do
+    it 'returns the right col' do
+      cell = @game.cell_at(2,1)
+      col = @game.col(2)
+      expect(cell.col.cells).to eq(col.cells)
     end
   end
 

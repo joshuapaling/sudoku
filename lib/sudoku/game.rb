@@ -97,6 +97,11 @@ module Sudoku
       return Scope.new(vals)
     end
 
+    def cell_at(x, y)
+      @cells.detect{|c| c.x == x && c.y == y}
+    end
+
+  private
     def thirds(num)
       case num
       when 1
@@ -109,8 +114,5 @@ module Sudoku
       return range
     end
 
-    def cell_at(x, y)
-      @cells.detect{|c| c.x == x && c.y == y}
-    end
   end
 end
