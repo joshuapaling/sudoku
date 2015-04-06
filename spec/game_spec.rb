@@ -1,10 +1,9 @@
 require 'spec_helper'
 
 def check_can_solve(puzzle, solution = nil)
-  s = Sudoku::Game.new(puzzle, solution)
-  s.solve!
-  expect(s.solved?).to be true
-  s.pretty_print
+  game = Sudoku::Game.new(puzzle, solution)
+  game.solve!
+  expect(game.solved?).to be true
 end
 
 describe Sudoku::Game do

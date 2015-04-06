@@ -20,9 +20,9 @@ module Sudoku
     def techniques
       [
         Sudoku::Techniques::Elimination,
-        Sudoku::Techniques::HiddenSingle,
-        Sudoku::Techniques::NakedPair,
-        Sudoku::Techniques::LockedCandidate,
+        # Sudoku::Techniques::HiddenSingle,
+        # Sudoku::Techniques::NakedPair,
+        # Sudoku::Techniques::LockedCandidate,
       ]
     end
 
@@ -66,35 +66,35 @@ module Sudoku
     end
 
     def row(row_num)
-      vals = []
+      cells = []
       @cells.each do |c|
         if c.y == row_num
-          vals << c
+          cells << c
         end
       end
-      return Scope.new(vals)
+      return Scope.new(cells, :row, row_num)
     end
 
     def col(col_num)
-      vals = []
+      cells = []
       @cells.each do |c|
         if c.x == col_num
-          vals << c
+          cells << c
         end
       end
-      return Scope.new(vals)
+      return Scope.new(cells, :col, col_num)
     end
 
     def box(box_x, box_y)
-      vals = []
+      cells = []
       @cells.each do |c|
         x_candidates = thirds(box_x)
         y_candidates = thirds(box_y)
         if x_candidates.include?(c.x) && y_candidates.include?(c.y)
-          vals << c
+          cells << c
         end
       end
-      return Scope.new(vals)
+      return Scope.new(cells, :square, [box_x, box_y])
     end
 
     def cell_at(x, y)

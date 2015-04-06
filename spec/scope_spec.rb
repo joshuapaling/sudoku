@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe Sudoku::Scope do
   before :each do
-    s = Sudoku::Game.new
-    @c1 = Sudoku::Cell.new(1,1,0,s)
-    @c2 = Sudoku::Cell.new(1,1,0,s)
-    @c3 = Sudoku::Cell.new(1,1,0,s)
-    @c1.candidates = [1,2,3]
-    @c2.candidates = [1,2]
-    @c3.candidates = [1,2,4]
+    @game = Sudoku::Game.new
+    @c1 = Sudoku::Cell.new(1,1,nil,@game)
+    @c2 = Sudoku::Cell.new(1,1,nil,@game)
+    @c3 = Sudoku::Cell.new(1,1,nil,@game)
+    @c1.eliminate_candidates([4,5,6,7,8,9]) # remaining: 1,2,3
+    @c2.eliminate_candidates([3,4,5,6,7,8,9]) # remaining: 1,2
+    @c3.eliminate_candidates([3,5,6,7,8,9]) # remaining: 1,2,4
     cells = [@c1, @c2, @c3]
 
-    @scope = Sudoku::Scope.new cells
+    @scope = Sudoku::Scope.new(cells)
   end
 
   describe "#candidates_outside_of" do
     it "finds a candidate that is the only instance of that candidate" do
-      candidates = @scope.candidates_outside_of @c1
+      candidates = @scope.candidates_outside_of(@c1)
       expect(candidates).to eq([1,2,4])
     end
   end

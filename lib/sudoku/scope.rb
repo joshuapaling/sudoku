@@ -2,7 +2,9 @@ module Sudoku
   class Scope
     attr_accessor :cells
 
-    def initialize cells
+    def initialize(cells, type = nil, identifier = nil)
+      @type = type
+      @identifier = identifier
       @cells = cells
     end
 
@@ -40,6 +42,10 @@ module Sudoku
 
     def cells_with_candidate(i)
       @cells.select { |c| c.candidates.include?(i) }
+    end
+
+    def to_s
+      "#{@type} #{@identifier}"
     end
 
   end
