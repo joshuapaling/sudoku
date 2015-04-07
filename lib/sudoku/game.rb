@@ -20,8 +20,9 @@ module Sudoku
     def techniques
       [
         Sudoku::Techniques::Elimination,
-        # Sudoku::Techniques::HiddenSingle,
-        # Sudoku::Techniques::NakedPair,
+        Sudoku::Techniques::HiddenSingle,
+        Sudoku::Techniques::NakedPair,
+        Sudoku::Techniques::NakedSubset,
         # Sudoku::Techniques::LockedCandidate,
       ]
     end

@@ -15,7 +15,7 @@ describe Sudoku::Scope do
   end
 
   describe "#candidates_outside_of" do
-    it "finds a candidate that is the only instance of that candidate" do
+    it "finds correct candidates" do
       candidates = @scope.candidates_outside_of(@c1)
       expect(candidates).to eq([1,2,4])
     end

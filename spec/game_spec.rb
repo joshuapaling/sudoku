@@ -58,7 +58,6 @@ describe Sudoku::Game do
     end
   end
 
-
   describe '#unsolved_cells' do
     it 'should return correct no of unsolved cells' do
       @game = Sudoku::Game.new(EASY1)
@@ -82,23 +81,23 @@ describe Sudoku::Game do
       check_can_solve(EASY1, EASY1_SOLUTION)
     end
 
-    # it "solves a medium puzzle" do
-    #   check_can_solve MEDIUM1
-    # end
+    it "solves a medium puzzle" do
+      check_can_solve(MEDIUM1)
+    end
 
-    # it "solves hard puzzles" do
-    #   check_can_solve HARD1
-    #   check_can_solve HARD2
-    #   check_can_solve HARD3
-    # end
+    it "solves hard puzzles" do
+      check_can_solve(HARD1)
+      check_can_solve(HARD2)
+      check_can_solve(HARD3)
+    end
 
-    # it "solves evil puzzles" do
-    #   check_can_solve EVIL1
-    #   check_can_solve EVIL2
-    # end
+    it "solves evil puzzles" do
+      check_can_solve(EVIL1)
+      check_can_solve(EVIL2)
+    end
 
     # it "solves really evil puzzles" do
-    #   check_can_solve EVIL3
+    #   check_can_solve(EVIL3)
     # end
   end
 

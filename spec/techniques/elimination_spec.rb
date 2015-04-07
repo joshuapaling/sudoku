@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Sudoku::Game do
-  describe '#eliminate_for_scope' do
+describe Sudoku::Techniques::Elimination do
+  describe '#call' do
     it 'eliminates correct candidates' do
       game = Sudoku::Game.new(EASY1, EASY1_SOLUTION)
       cell = game.cell_at(1,1)

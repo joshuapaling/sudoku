@@ -17,15 +17,15 @@ module Sudoku
       def call
         return unless @cell.candidates.count == 2
         @cell.each_scope do |scope|
-          find_twins_in_scope(scope)
+          naked_pair_in_scope(scope)
         end
       end
 
-      def find_twins_in_scope(scope)
+      def naked_pair_in_scope(scope)
         scope.cells_other_than(@cell) do |c|
           if c.candidates == @cell.candidates
-            twin = c
-            scope.eliminated_from_all_excluding(@cell.candidates, [@cell, twin])
+            pair = c
+            scope.eliminated_from_all_excluding(@cell.candidates, [@cell, pair])
           end
         end
       end

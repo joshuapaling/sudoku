@@ -32,6 +32,15 @@ module Sudoku
       return other_cells
     end
 
+    def unsolved_cells_other_than(cell)
+      other_cells = (@cells - [cell])
+      other_cells = other_cells.select {|c| !c.solved? }
+      if block_given?
+        other_cells.each { |c| yield(c) }
+      end
+      return other_cells
+    end
+
     def eliminated_from_all_excluding(arr, cells_to_exclude)
       if arr.is_a?(Fixnum)
         arr = [arr]

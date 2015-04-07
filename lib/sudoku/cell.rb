@@ -21,11 +21,11 @@ module Sudoku
       end
     end
 
-    def eliminate_candidates(arr, the_str = nil)
+    def eliminate_candidates(arr)
       return if solved?
       if @solved_val && (arr).include?(@solved_val)
-        puts PrettyPrinter.new.color_print_game(@game)
-        raise 'We should NOT be eliminating the solution value of ' + @solved_val.to_s + '! Cell: ' + coords_str + ' eliminating ' + arr.to_s + ' from ' + @candidates.to_s + " Extra info: #{the_str}"
+        # puts PrettyPrinter.new.color_print_game(@game)
+        raise 'We should NOT be eliminating the solution value of ' + @solved_val.to_s + '! Cell: ' + coords_str + ' eliminating ' + arr.to_s + ' from ' + @candidates.to_s
       end
       @candidates = @candidates - arr
       solve_if_lone_candidate!
